@@ -13,7 +13,7 @@ async fn stats(ctx: &Context, msg: &Message, mut args: Args) -> CommandResult {
         Ok(user) => user,
         Err(ArgError::Eos) => msg.author.id,
         Err(_) => {
-            msg.channel_id.say(&ctx.http, "Could not get the target user. Check your arguments and try again").await?;
+            msg.reply(&ctx, "Could not get the target user. Check your arguments and try again").await?;
             return Ok(());
         }
     };

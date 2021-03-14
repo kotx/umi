@@ -22,7 +22,7 @@ features = ["macros", "signal", "rt-multi-thread"]
 
 [dependencies.serenity]
 version = "0.10"
-features = ["absolute_ratelimits"]
+features = ["collector", "absolute_ratelimits"]
 
 [dependencies.sqlx]
 version = "0.5"

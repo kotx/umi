@@ -1,19 +1,24 @@
 #[forbid(unsafe_code)]
 #[deny(bad_style)]
-
-mod utils;
 mod commands;
 mod data;
 mod events;
+mod utils;
 
 use data::PgPoolContainer;
 use events::{connection, message};
-use serenity::{Client, client::bridge::gateway::ShardManager, framework::StandardFramework, http::Http, prelude::{Mutex, TypeMapKey}};
-use std::{
-    collections::HashSet,
-    env,
-    sync::Arc,
+use serenity::{
+    client::{bridge::gateway::ShardManager, Context},
+    framework::{
+        standard::{macros::*, CommandError},
+        StandardFramework,
+    },
+    http::Http,
+    model::channel::Message,
+    prelude::{Mutex, TypeMapKey},
+    Client,
 };
+use std::{collections::HashSet, env, sync::Arc};
 use tracing::error;
 use tracing_subscriber::{EnvFilter, FmtSubscriber};
 
@@ -25,7 +30,7 @@ impl TypeMapKey for ShardManagerContainer {
 
 #[tokio::main]
 async fn main() {
-    dotenv::dotenv().expect("Failed to load .env file");
+    dotenv::dotenv().ok();
 
     let subscriber = FmtSubscriber::builder()
         .with_env_filter(EnvFilter::from_default_env())
@@ -65,7 +70,9 @@ async fn main() {
         .group(&commands::GENERAL_GROUP)
         .group(&commands::CONFIG_GROUP)
         .group(&commands::STATS_GROUP)
-        .group(&commands::MARKOV_GROUP);
+        .group(&commands::MARKOV_GROUP)
+        .group(&commands::DATA_GROUP)
+        .after(after_hook);
 
     let mut client = Client::builder(&token)
         .framework(framework)
@@ -91,5 +98,13 @@ async fn main() {
 
     if let Err(why) = client.start().await {
         error!("Client error: {:?}", why);
+    }
+}
+
+#[hook]
+async fn after_hook(_: &Context, _: &Message, cmd_name: &str, error: Result<(), CommandError>) {
+    //  Print out an error if it happened
+    if let Err(why) = error {
+        println!("Error in {}: {:?}", cmd_name, why);
     }
 }

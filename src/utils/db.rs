@@ -63,11 +63,13 @@ pub async fn get_messages_content(
     pool: &PgPool,
     user: String,
 ) -> Result<Vec<MessageContent>, sqlx::Error> {
-    Ok(
-        sqlx::query_as!(MessageContent, "SELECT content FROM messages WHERE author = $1", user)
-            .fetch_all(pool)
-            .await?,
+    Ok(sqlx::query_as!(
+        MessageContent,
+        "SELECT content FROM messages WHERE author = $1",
+        user
     )
+    .fetch_all(pool)
+    .await?)
 }
 
 #[derive(Deserialize, Serialize, Debug)]
@@ -93,7 +95,7 @@ pub async fn create_message(
     content: String,
 ) -> Result<String, sqlx::Error> {
     Ok(sqlx::query_as::<_, UmiMessage>(
-        "INSERT INTO messages(id, author, content) VALUES($1, $2, $3) RETURNING id",
+        "INSERT INTO messages AS m(id, author, content) VALUES($1, $2, $3) ON CONFLICT (id) DO UPDATE SET content = $3 RETURNING id",
     )
     .bind(id)
     .bind(author)
