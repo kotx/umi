@@ -26,4 +26,4 @@ features = ["absolute_ratelimits"]
 
 [dependencies.sqlx]
 version = "0.5"
-features = ["runtime-tokio-native-tls", "macros", "migrate", "offline", "postgres"]
+features = ["runtime-tokio-rustls", "macros", "migrate", "offline", "postgres"]

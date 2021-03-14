@@ -10,11 +10,11 @@ use tracing::info;
 fn get_chain(messages: &Vec<MessageContent>) -> Chain<String> {
     let mut chain: Chain<String> = Chain::new();
 
-    // for msg in messages {
-    //     chain.feed_str(msg.content.as_str());
-    // }
+    for msg in messages {
+        chain.feed_str(msg.content.as_str());
+    }
 
-    chain.feed_str(messages.into_iter().map(|x| x.content.to_string()).collect::<Vec<String>>().join(" ").as_str());
+    // chain.feed_str(messages.into_iter().map(|x| x.content.to_string()).collect::<Vec<String>>().join(" ").as_str());
     chain
 }
 
@@ -65,7 +65,7 @@ async fn markov(ctx: &Context, msg: &Message, mut args: Args) -> CommandResult {
                     e.author(|a| {
                         a.name(format!("{} once said...", target_user.name,))
                             .icon_url(
-                                &msg.author
+                                &target_user
                                     .avatar_url()
                                     .unwrap_or(msg.author.default_avatar_url()),
                             )
@@ -142,7 +142,7 @@ async fn search(ctx: &Context, msg: &Message, mut args: Args) -> CommandResult {
                         e.author(|a| {
                             a.name(format!("{} once said...", target_user.name,))
                                 .icon_url(
-                                    &msg.author
+                                    &target_user
                                         .avatar_url()
                                         .unwrap_or(msg.author.default_avatar_url()),
                                 )
@@ -214,7 +214,7 @@ async fn graph(ctx: &Context, msg: &Message, mut args: Args) -> CommandResult {
             .send_message(&ctx.http, |m| {
                 m.embed(|e| {
                     e.author(|a| {
-                        a.name(format!("Graph of {}'s markov chain", target_user.name,))
+                        a.name(format!("Graph of {}'s markov chain", target_user.name))
                             .icon_url(
                                 &msg.author
                                     .avatar_url()

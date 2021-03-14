@@ -28,7 +28,7 @@ async fn stats(ctx: &Context, msg: &Message, mut args: Args) -> CommandResult {
             m.embed(|e| { e
                 .author(|a| {
                     a.name(format!("Message statistics for {}#{}", target_user.name, &msg.author.discriminator))
-                        .icon_url(&msg.author.avatar_url().unwrap_or(msg.author.default_avatar_url()))
+                        .icon_url(&target_user.avatar_url().unwrap_or(target_user.default_avatar_url()))
                 })
                 .description("Here is some information about the messages they have sent")
                 .field("Messages Tracked", messages.len(), true)
