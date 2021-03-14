@@ -10,6 +10,7 @@ impl EventHandler for Handler {
 
         let content = msg.content_safe(&ctx.cache).await;
         if content.trim().is_empty() { return; }
+        if content.starts_with("u~") { return; } // don't process commands
 
         let pool = get_pool(&ctx).await;
         if get_user_opt(&pool, msg.author.id.to_string()).await.unwrap_or_default() {

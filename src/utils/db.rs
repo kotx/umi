@@ -49,6 +49,28 @@ pub async fn get_messages(pool: &PgPool, user: String) -> Result<Vec<UmiMessage>
 }
 
 #[derive(Deserialize, Serialize, Debug)]
+pub struct MessageContent {
+    pub content: String,
+}
+
+impl Into<String> for MessageContent {
+    fn into(self) -> String {
+        self.content
+    }
+}
+
+pub async fn get_messages_content(
+    pool: &PgPool,
+    user: String,
+) -> Result<Vec<MessageContent>, sqlx::Error> {
+    Ok(
+        sqlx::query_as!(MessageContent, "SELECT content FROM messages WHERE author = $1", user)
+            .fetch_all(pool)
+            .await?,
+    )
+}
+
+#[derive(Deserialize, Serialize, Debug)]
 struct CreateUser {
     id: String,
 }

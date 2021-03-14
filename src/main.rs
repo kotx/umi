@@ -64,7 +64,8 @@ async fn main() {
         .help(&commands::meta::HELP)
         .group(&commands::GENERAL_GROUP)
         .group(&commands::CONFIG_GROUP)
-        .group(&commands::STATS_GROUP);
+        .group(&commands::STATS_GROUP)
+        .group(&commands::MARKOV_GROUP);
 
     let mut client = Client::builder(&token)
         .framework(framework)

@@ -1,10 +1,14 @@
 pub mod meta;
 pub mod config;
 pub mod stats;
+pub mod markov;
 
-use meta::*;
-use config::*;
-use stats::*;
+use self::{
+    config::*,
+    markov::*,
+    meta::*,
+    stats::*,
+};
 use serenity::framework::standard::macros::*;
 
 #[group]
@@ -18,3 +22,7 @@ pub struct Config;
 #[group]
 #[commands(stats)]
 pub struct Stats;
+
+#[group]
+#[commands(markov, search, graph)]
+pub struct Markov;
