@@ -1,0 +1,82 @@
+{
+  "db": "PostgreSQL",
+  "82e0417058938ceb18d36bd9fac0211332e1a7ee043303649dc6a5a67d4614c8": {
+    "query": "INSERT INTO users(id) VALUES($1) RETURNING id",
+    "describe": {
+      "columns": [
+        {
+          "ordinal": 0,
+          "name": "id",
+          "type_info": "Varchar"
+        }
+      ],
+      "parameters": {
+        "Left": [
+          "Varchar"
+        ]
+      },
+      "nullable": [
+        false
+      ]
+    }
+  },
+  "843923b9a0257cf80f1dff554e7dc8fdfc05f489328e8376513124dfb42996e3": {
+    "query": "SELECT * FROM users WHERE id = $1",
+    "describe": {
+      "columns": [
+        {
+          "ordinal": 0,
+          "name": "id",
+          "type_info": "Varchar"
+        },
+        {
+          "ordinal": 1,
+          "name": "opt",
+          "type_info": "Bool"
+        }
+      ],
+      "parameters": {
+        "Left": [
+          "Text"
+        ]
+      },
+      "nullable": [
+        false,
+        false
+      ]
+    }
+  },
+  "c59f0f793ea6d9544d6194e931f42516d994533c9f9082eee4b0d389a4887b9e": {
+    "query": "SELECT opt FROM users WHERE id = $1",
+    "describe": {
+      "columns": [
+        {
+          "ordinal": 0,
+          "name": "opt",
+          "type_info": "Bool"
+        }
+      ],
+      "parameters": {
+        "Left": [
+          "Text"
+        ]
+      },
+      "nullable": [
+        false
+      ]
+    }
+  },
+  "f999b759eb2aef66516a2babdad6cdb79edd953fe075a9f72847ac9c8f814687": {
+    "query": "UPDATE users SET opt = $1 WHERE id = $2",
+    "describe": {
+      "columns": [],
+      "parameters": {
+        "Left": [
+          "Bool",
+          "Text"
+        ]
+      },
+      "nullable": []
+    }
+  }
+}
