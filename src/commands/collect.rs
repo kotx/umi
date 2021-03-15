@@ -86,7 +86,7 @@ pub async fn collect(ctx: &Context, msg: &Message) -> CommandResult {
                                 continue;
                             } // don't process commands
 
-                            info!("{}/{}: {}", message.author.id, message.id, content);
+                            debug!("{}/{}: {}", message.author.id, message.id, content);
 
                             let create_msg = create_message(
                                 &pool,
