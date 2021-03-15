@@ -1,5 +1,25 @@
 {
   "db": "PostgreSQL",
+  "39972466570fd4a1201547eeac1e22bfa71fd368e9b5f43d9153cbde6ea82346": {
+    "query": "SELECT content FROM messages WHERE author = $1",
+    "describe": {
+      "columns": [
+        {
+          "ordinal": 0,
+          "name": "content",
+          "type_info": "Varchar"
+        }
+      ],
+      "parameters": {
+        "Left": [
+          "Text"
+        ]
+      },
+      "nullable": [
+        false
+      ]
+    }
+  },
   "82e0417058938ceb18d36bd9fac0211332e1a7ee043303649dc6a5a67d4614c8": {
     "query": "INSERT INTO users(id) VALUES($1) RETURNING id",
     "describe": {
