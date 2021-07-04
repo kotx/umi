@@ -14,7 +14,7 @@ serde = { version = "1.0", features = ["derive"] }
 chrono = "0.4"
 
 markov = { version = "1.1", features = ["graph"] }
-petgraph = "0.5"
+petgraph = "0.6"
 
 [dependencies.tokio]
 version = "1.6"
